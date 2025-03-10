@@ -13,7 +13,6 @@ public class LevelManager : MonoBehaviour
     private MapDefinition _mapDefinition;
     private List<GameObject> walls, floors;
     public RSO_PlayerPosition playerPosition;
-    public RSO_ExitPosition exitPosition;
     public RSO_MapDefinition mapDefinition;
 
     private void Start()
