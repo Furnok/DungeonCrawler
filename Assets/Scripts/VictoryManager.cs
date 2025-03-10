@@ -1,11 +1,11 @@
-using System;
 using UnityEngine;
 
 public class VictoryManager : MonoBehaviour
 {
     public RSO_PlayerPosition playerPosition;
-    public RSO_ExitPosition exitPosition;
     public RSE_PlayerExitedDungeon playerExitedDungeon;
+    public RSO_ItemsLeft itemsLeft;
+    public RSO_MapDefinition mapDefinition;
 
     private void OnEnable()
     {
@@ -19,7 +19,14 @@ public class VictoryManager : MonoBehaviour
 
     private void CheckPlayerOnExitTile(Vector2Int position)
     {
-        if (playerPosition.Value == exitPosition.Value)
-            playerExitedDungeon.Dispatch();
+        Vector2Int exitPosition = new Vector2Int(mapDefinition.Value.exitCoordinates[0], mapDefinition.Value.exitCoordinates[1]);
+        Debug.Log(exitPosition);
+        Debug.Log(playerPosition.Value);
+        Debug.Log(itemsLeft.Value);
+        if (playerPosition.Value == exitPosition && itemsLeft.Value == 0)
+        {
+            playerExitedDungeon.Dispatch.Invoke();
+            Debug.Log("Victory");
+        }
     }
 }

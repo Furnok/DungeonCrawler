@@ -2,18 +2,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DungeonManager : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
     [SerializeField] private TextAsset mapDefinitionJSON;
     [SerializeField] private GameObject wallTile;
     [SerializeField] private GameObject floorTile;
     [SerializeField] private GameObject exitSign;
-    [SerializeField] private GameObject itemPrefab;
 
-    private MapDefinition mapDefinition;
+
+    private MapDefinition _mapDefinition;
     private List<GameObject> walls, floors;
     public RSO_PlayerPosition playerPosition;
     public RSO_ExitPosition exitPosition;
+    public RSO_MapDefinition mapDefinition;
 
     private void Start()
     {
@@ -24,13 +25,14 @@ public class DungeonManager : MonoBehaviour
 
     private void ParseJSON()
     {
-        mapDefinition = JsonUtility.FromJson<MapDefinition>(mapDefinitionJSON.text);
-        mapDefinition.RotateMapClockWise();
+        _mapDefinition = JsonUtility.FromJson<MapDefinition>(mapDefinitionJSON.text);
+        _mapDefinition.RotateMapClockWise();
+        mapDefinition.Value = _mapDefinition;
     }
 
     private void SpawnPlayer()
     {
-        playerPosition.Value = new Vector2Int(mapDefinition.spawnCoordinates[0], mapDefinition.spawnCoordinates[1]);
+        playerPosition.Value = new Vector2Int(_mapDefinition.spawnCoordinates[0], _mapDefinition.spawnCoordinates[1]);
     }
 
     private void GenerateDungeon()
@@ -38,26 +40,25 @@ public class DungeonManager : MonoBehaviour
         GenerateWalls();
         GenerateFloors();
         GenerateExit();
-        GenerateItems();
     }
 
     private void GenerateWalls()
     {
-        GenerateTiles(mapDefinition.wallLayer, wallTile, 1);
+        GenerateTiles(_mapDefinition.wallLayer, wallTile, 1);
     }
 
     private void GenerateFloors()
     {
-        GenerateTiles(mapDefinition.wallLayer, floorTile, 0);
+        GenerateTiles(_mapDefinition.wallLayer, floorTile, 0);
     }
 
     private void GenerateTiles(int[] layer, GameObject tilePrefab, int tileType)
     {
-        for (int x = 0; x < mapDefinition.width; x++)
+        for (int x = 0; x < _mapDefinition.width; x++)
         {
-            for (int y = 0; y < mapDefinition.height; y++)
+            for (int y = 0; y < _mapDefinition.height; y++)
             {
-                if (layer[x * mapDefinition.width + y] == tileType)
+                if (layer[x * _mapDefinition.width + y] == tileType)
                 {
                     Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
                 }
@@ -83,19 +84,14 @@ public class DungeonManager : MonoBehaviour
 
     private bool IsWall(Vector2Int position)
     {
-        if (position.x < 0 || position.x >= mapDefinition.width || position.y < 0 || position.y >= mapDefinition.height)
+        if (position.x < 0 || position.x >= _mapDefinition.width || position.y < 0 || position.y >= _mapDefinition.height)
             return true;
 
-        return mapDefinition.wallLayer[position.x * mapDefinition.width + position.y] == 1;
+        return _mapDefinition.wallLayer[position.x * _mapDefinition.width + position.y] == 1;
     }
 
     private void GenerateExit()
     {
-        Instantiate(exitSign, new Vector3(mapDefinition.exitCoordinates[0], 0, mapDefinition.exitCoordinates[1]), Quaternion.identity);
-    }
-
-    private void GenerateItems()
-    {
-        GenerateTiles(mapDefinition.itemsLayer, itemPrefab, 1);
+        Instantiate(exitSign, new Vector3(_mapDefinition.exitCoordinates[0], 0, _mapDefinition.exitCoordinates[1]), Quaternion.identity);
     }
 }

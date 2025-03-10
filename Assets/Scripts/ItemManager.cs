@@ -1,40 +1,67 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
+    [SerializeField] private GameObject itemPrefab;
+
     public RSO_PlayerPosition playerPosition;
+    public RSO_ItemsLeft itemsLeft;
     public RSO_MapDefinition mapDefinition;
 
-    private Dictionary<Vector2Int, bool> items;
+    private Dictionary<Vector2Int, GameObject> items = new Dictionary<Vector2Int, GameObject>();
 
     private void OnEnable()
     {
         mapDefinition.onValueChanged += Initialize;
+        playerPosition.onValueChanged += HandlePlayerPositionChange;
     }
 
     private void OnDisable()
     {
         mapDefinition.onValueChanged -= Initialize;
+        playerPosition.onValueChanged -= HandlePlayerPositionChange;
     }
 
-    // WIP
+
+    private void Awake()
+    {
+        itemsLeft.Value = 0;
+    }
+
+    private void AddItem(Vector2Int position, GameObject item)
+    {
+        items.Add(position, item);
+        itemsLeft.Value++;
+    }
+
+    private void HandlePlayerPositionChange(Vector2Int position)
+    {
+        if (items.ContainsKey(position))
+        {
+            Destroy(items[position]);
+            items.Remove(position);
+            itemsLeft.Value--;
+        }
+    }
+
     private void Initialize(MapDefinition mapDefinition)
     {
-        items = new Dictionary<Vector2Int, bool>();
+        GenerateItems(mapDefinition.itemsLayer, itemPrefab, 1);
+    }
 
-        for (int i = 0; i < mapDefinition.height; i++)
+    private void GenerateItems(int[] layer, GameObject tilePrefab, int tileType)
+    {
+        for (int x = 0; x < mapDefinition.Value.width; x++)
         {
-            for (int j = 0; j < mapDefinition.width; j++)
+            for (int y = 0; y < mapDefinition.Value.height; y++)
             {
-                if (mapDefinition.itemsLayer[i * mapDefinition.height + j] == 1)
+                if (layer[x * mapDefinition.Value.width + y] == tileType)
                 {
-                    items.Add(new Vector2Int(i, j), true);
+                    GameObject item = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
+                    AddItem(new Vector2Int(x, y), item);
                 }
             }
         }
     }
-
-    
 }
