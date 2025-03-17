@@ -28,9 +28,13 @@ class CanvasGrid(tk.Canvas):
 
                 if (x, y) == self.model.exit_coordinates:
                     self.create_rectangle(x0+10*self.scale, y0+10*self.scale, x1-10*self.scale, y1-10*self.scale, fill="red")
-                
+
                 if (x, y) == self.model.spawn_coordinates:
                     self.create_rectangle(x0+10*self.scale, y0+10*self.scale, x1-10*self.scale, y1-10*self.scale, fill="green")
+
+                if self.model.ghost_powerup_layer[y * self.model.width + x] == 1:
+                    self.create_oval(x0+15*self.scale, y0+15*self.scale, x1-15*self.scale, y1-15*self.scale, fill="blue")
+
 
     def bind_events(self, on_click, on_drag, zoom, start_pan, pan):
         self.bind("<Button-1>", on_click)
@@ -80,6 +84,9 @@ class ControlPanel(tk.Frame):
         self.item_button = tk.Button(self.mode_frame, text="Edit Items", command=self.set_item_mode)
         self.item_button.pack(side=tk.LEFT)
 
+        self.ghost_button = tk.Button(self.mode_frame, text="Edit Ghost PowerUps", command=self.set_ghost_powerup_mode)
+        self.ghost_button.pack(side=tk.LEFT)
+
         self.exit_button = tk.Button(self.mode_frame, text="Set Exit", command=self.set_exit_mode)
         self.exit_button.pack(side=tk.LEFT)
 
@@ -118,6 +125,8 @@ class ControlPanel(tk.Frame):
         self.save_button = tk.Button(self.file_frame, text="Save Data", command=self.save_data)
         self.save_button.pack(side=tk.LEFT)
 
+
+
     def set_wall_mode(self):
         self.model.edit_mode = "walls"
         self.mode_label.config(text="Mode: Editing Walls")
@@ -133,6 +142,10 @@ class ControlPanel(tk.Frame):
     def set_spawn_mode(self):
         self.model.edit_mode = "spawn"
         self.mode_label.config(text="Mode: Setting Spawn")
+
+    def set_ghost_powerup_mode(self):
+        self.model.edit_mode = "ghostPowerUp"
+        self.mode_label.config(text="Mode: Editing Ghost PowerUps")
 
     def apply_size(self):
         try:

@@ -52,17 +52,33 @@ def main():
                 0,0,0,0,0,0,0,0,1,0,
                 0,0,0,1,0,0,0,0,0,0,
                 0,0,0,0,0,0,0,0,0,0
+            ],
+            "ghostPowerUpLayer": [
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0,
+                0,0,0,0,0,0,0,0,0,0
             ]
         }
 
+    #if "ghostPowerUpLayer" not in data:
+    #    data["ghostPowerUpLayer"] = [0] * (data["width"] * data["height"])
+
     root = tk.Tk()
-    editor = GridEditor(root, data["width"], data["height"], data["wallLayer"], data["itemsLayer"])
-    
+    editor = GridEditor(root, data["width"], data["height"], data["wallLayer"], data["itemsLayer"], data["ghostPowerUpLayer"])
+
+
     def save_shortcut(event):
         editor.control_panel.save_data()
 
     root.bind('<Control-s>', save_shortcut)
-    
+
     root.mainloop()
 
 if __name__ == "__main__":

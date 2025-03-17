@@ -7,15 +7,18 @@ public class MapDefinition
     public int[] exitCoordinates;
     public int[] wallLayer;
     public int[] itemsLayer;
+    public int[] ghostPowerUpLayer;
 
 
     public void RotateMapClockWise()
     {
         int[,] rotatedWallLayer = RotateLayerClockWise(wallLayer);
         int[,] rotatedObjectsLayer = RotateLayerClockWise(itemsLayer);
+        int[,] rotatedGhostPowerUpLayer = RotateLayerClockWise(ghostPowerUpLayer);
 
         wallLayer = FlattenLayer(rotatedWallLayer);
         itemsLayer = FlattenLayer(rotatedObjectsLayer);
+        ghostPowerUpLayer = FlattenLayer(rotatedGhostPowerUpLayer);
     }
 
     private int[,] RotateLayerClockWise(int[] layer)

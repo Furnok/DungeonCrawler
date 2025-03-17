@@ -4,8 +4,8 @@ from grid_model import GridModel
 from ui_components import CanvasGrid, ControlPanel
 
 class GridEditor:
-    def __init__(self, root, width, height, wall_layer, items_layer):
-        self.model = GridModel(width, height, wall_layer, items_layer)
+    def __init__(self, root, width, height, wall_layer, items_layer, ghost_powerup_layer):
+        self.model = GridModel(width, height, wall_layer, items_layer, ghost_powerup_layer)
         self.view = CanvasGrid(root, self.model)
         self.control_panel = ControlPanel(root, self.model, self.view)
 

@@ -3,7 +3,7 @@ using UnityEngine;
 public class VictoryManager : MonoBehaviour
 {
     public RSO_PlayerPosition playerPosition;
-    public RSE_PlayerExitedDungeon playerExitedDungeon;
+    public RSE_OnPlayerFinishLevel onPlayerFinishLevel;
     public RSO_ItemsLeft itemsLeft;
     public RSO_MapDefinition mapDefinition;
 
@@ -25,7 +25,7 @@ public class VictoryManager : MonoBehaviour
         Debug.Log(itemsLeft.Value);
         if (playerPosition.Value == exitPosition && itemsLeft.Value == 0)
         {
-            playerExitedDungeon.Dispatch.Invoke();
+            onPlayerFinishLevel.RaiseEvent();
             Debug.Log("Victory");
         }
     }

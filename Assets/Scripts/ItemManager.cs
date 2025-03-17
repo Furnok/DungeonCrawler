@@ -4,6 +4,7 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     [SerializeField] private GameObject itemPrefab;
+    [SerializeField] private Transform itemsParent;
 
     public RSO_PlayerPosition playerPosition;
     public RSO_ItemsLeft itemsLeft;
@@ -58,7 +59,7 @@ public class ItemManager : MonoBehaviour
             {
                 if (layer[x * mapDefinition.Value.width + y] == tileType)
                 {
-                    GameObject item = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity);
+                    GameObject item = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity, itemsParent);
                     AddItem(new Vector2Int(x, y), item);
                 }
             }
