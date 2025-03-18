@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 6399927094097387159}
   - component: {fileID: 273569129397905816}
   - component: {fileID: 6598848335957547566}
+  - component: {fileID: 2673343113000678903}
   m_Layer: 0
   m_Name: DungeonManager
   m_TagString: Untagged
@@ -182,6 +183,7 @@ MonoBehaviour:
   mapDefinitionJSON:
   - {fileID: 4900000, guid: a39db4d64ecc234459cc17430749a3a0, type: 3}
   - {fileID: 4900000, guid: 012b404c7796b674386ac3835a7b9ff2, type: 3}
+  - {fileID: 4900000, guid: 33e0f4d412658f04cbfa7e79b359c0e5, type: 3}
   wallTile: {fileID: 6196858584143150810, guid: fdcc026ba97083f41915d868532b0700, type: 3}
   floorTile: {fileID: 818476359416893509, guid: 214863e5674cf984ca2c98d596a3e268, type: 3}
   exitSign: {fileID: 43697112623439111, guid: 2606e3406affc3c42ba7c98412d3cb4b, type: 3}
@@ -199,6 +201,9 @@ MonoBehaviour:
   playerGhostMode: {fileID: 11400000, guid: 468f7211b1655904cbd792955b194fc6, type: 2}
   onPlayerFinishLevel: {fileID: 11400000, guid: 26a44852dd751bc4f88ea3f1399b2966, type: 2}
   onPlayerDie: {fileID: 11400000, guid: f37400833b0db9a4aa64a1c5e74c3689, type: 2}
+  playerIsMoving: {fileID: 11400000, guid: c715633d99c09a64eae3c8b2599f24e7, type: 2}
+  _levelNumber: {fileID: 11400000, guid: 3f892ca389112c943820eb6c6c0f0825, type: 2}
+  onPlayerMove: {fileID: 11400000, guid: ff4a96a9f58841e4a98b21f053fe8565, type: 2}
 --- !u!114 &5057555595873774952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,10 +387,29 @@ MonoBehaviour:
   timeGhostMode: 5
   ghostPowerUpPrefab: {fileID: 5743713307096757724, guid: fc8198b0002446b4e9b98500eb8d23a7, type: 3}
   ghostPowerUpsParent: {fileID: 693257434508660822}
+  onPlayerFinishLevel: {fileID: 11400000, guid: 26a44852dd751bc4f88ea3f1399b2966, type: 2}
   playerPosition: {fileID: 11400000, guid: 2aa3fcb7867e4fc49a2a55fa997a98d6, type: 2}
   mapDefinition: {fileID: 11400000, guid: 4425ae0772831cf4d81dbf04501ad88e, type: 2}
   playerGhostMode: {fileID: 11400000, guid: 468f7211b1655904cbd792955b194fc6, type: 2}
   onPlayerDie: {fileID: 11400000, guid: f37400833b0db9a4aa64a1c5e74c3689, type: 2}
+--- !u!114 &2673343113000678903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4434990665790798809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b1a52aa7095f464e969385749d74d99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementPointsMax: 3c0000006400000096000000
+  _levelNumber: {fileID: 11400000, guid: 3f892ca389112c943820eb6c6c0f0825, type: 2}
+  onPlayerFinishLevel: {fileID: 11400000, guid: 26a44852dd751bc4f88ea3f1399b2966, type: 2}
+  onPlayerMove: {fileID: 11400000, guid: ff4a96a9f58841e4a98b21f053fe8565, type: 2}
+  onPlayerDie: {fileID: 11400000, guid: f37400833b0db9a4aa64a1c5e74c3689, type: 2}
+  movementPoints: {fileID: 11400000, guid: 8d7e6818468111e4da4e7c001f4a6786, type: 2}
 --- !u!1 &6619446028642172539
 GameObject:
   m_ObjectHideFlags: 0

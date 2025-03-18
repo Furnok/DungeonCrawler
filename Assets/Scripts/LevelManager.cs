@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -21,14 +22,16 @@ public class LevelManager : MonoBehaviour
     public RSO_PlayerGhostMode playerGhostMode;
     public RSE_OnPlayerFinishLevel onPlayerFinishLevel;
     public RSE_OnPlayerDie onPlayerDie;
-
-    private int levelNumber = 0;
+    public RSO_PlayerIsMoving playerIsMoving;
+    public RSO_LevelNumber _levelNumber;
+    public RSE_OnPlayerMove onPlayerMove;
 
     GameObject exitGameObject;
 
     private void Awake()
     {
         playerPosition.Value = Vector2Int.zero;
+        _levelNumber.Value = 0;
     }
 
     private void Start()
@@ -52,8 +55,8 @@ public class LevelManager : MonoBehaviour
 
     void GenerateGame()
     {
-        levelNumber++;
-        if(mapDefinitionJSON.Count <= levelNumber)
+        _levelNumber.Value++;
+        if(mapDefinitionJSON.Count <= _levelNumber.Value)
         {
             LoadMenu();
             return;
@@ -66,13 +69,19 @@ public class LevelManager : MonoBehaviour
 
     private void ParseJSON()
     {
-        _mapDefinition = JsonUtility.FromJson<MapDefinition>(mapDefinitionJSON[levelNumber].text);
+        _mapDefinition = JsonUtility.FromJson<MapDefinition>(mapDefinitionJSON[_levelNumber.Value].text);
         _mapDefinition.RotateMapClockWise();
         mapDefinition.Value = _mapDefinition;
     }
 
     private void SpawnPlayer()
     {
+        StartCoroutine(Setup());
+    }
+
+    IEnumerator Setup()
+    {
+        yield return new WaitForSeconds(0.1f);
         playerPosition.Value = new Vector2Int(_mapDefinition.spawnCoordinates[0], _mapDefinition.spawnCoordinates[1]);
     }
 
@@ -133,8 +142,11 @@ public class LevelManager : MonoBehaviour
     {
         Vector2Int destination = playerPosition.Value + new Vector2Int((int)direction.x, (int)direction.y);
 
-        if (!IsWall(destination) || playerGhostMode.Value == true)
+        if (!IsWall(destination) && !playerIsMoving.Value || playerGhostMode.Value == true && !playerIsMoving.Value)
+        {
             playerPosition.Value = destination;
+            onPlayerMove.RaiseEvent();
+        }
     }
 
     private bool IsWall(Vector2Int position)

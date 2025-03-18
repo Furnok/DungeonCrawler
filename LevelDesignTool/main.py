@@ -67,8 +67,8 @@ def main():
             ]
         }
 
-    #if "ghostPowerUpLayer" not in data:
-    #    data["ghostPowerUpLayer"] = [0] * (data["width"] * data["height"])
+    if "ghostPowerUpLayer" not in data:
+        data["ghostPowerUpLayer"] = [0] * (data["width"] * data["height"])
 
     root = tk.Tk()
     editor = GridEditor(root, data["width"], data["height"], data["wallLayer"], data["itemsLayer"], data["ghostPowerUpLayer"])

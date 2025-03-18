@@ -8,6 +8,7 @@ public class GhostPowerUpManager : MonoBehaviour
     [SerializeField] private GameObject ghostPowerUpPrefab;
     [SerializeField] private Transform ghostPowerUpsParent;
 
+    public RSE_OnPlayerFinishLevel onPlayerFinishLevel;
     public RSO_PlayerPosition playerPosition;
     public RSO_MapDefinition mapDefinition;
     public RSO_PlayerGhostMode playerGhostMode;
@@ -24,12 +25,14 @@ public class GhostPowerUpManager : MonoBehaviour
     {
         mapDefinition.onValueChanged += Initialize;
         playerPosition.onValueChanged += HandlePlayerPositionChange;
+        onPlayerFinishLevel.action += StopGhostMode;
     }
 
     private void OnDisable()
     {
         mapDefinition.onValueChanged -= Initialize;
         playerPosition.onValueChanged -= HandlePlayerPositionChange;
+        onPlayerFinishLevel.action -= StopGhostMode;
     }
 
     private void AddItem(Vector2Int position, GameObject item)
@@ -49,6 +52,14 @@ public class GhostPowerUpManager : MonoBehaviour
 
             ghostModeCoroutine = StartCoroutine(ActiveGhostMode());
         }
+    }
+
+    void StopGhostMode()
+    {
+        if (ghostModeCoroutine != null)
+            StopCoroutine(ghostModeCoroutine);
+
+        playerGhostMode.Value = false;
     }
 
     private IEnumerator ActiveGhostMode()
@@ -75,6 +86,7 @@ public class GhostPowerUpManager : MonoBehaviour
 
     private void Initialize(MapDefinition mapDefinition)
     {
+        ghostPowerUps.Clear();
         GenerateItems(mapDefinition.ghostPowerUpLayer, ghostPowerUpPrefab, 1);
     }
 

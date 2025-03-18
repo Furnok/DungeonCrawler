@@ -24,7 +24,6 @@ public class ItemManager : MonoBehaviour
         playerPosition.onValueChanged -= HandlePlayerPositionChange;
     }
 
-
     private void Awake()
     {
         itemsLeft.Value = 0;
@@ -48,6 +47,8 @@ public class ItemManager : MonoBehaviour
 
     private void Initialize(MapDefinition mapDefinition)
     {
+        itemsLeft.Value = 0;
+        items.Clear();
         GenerateItems(mapDefinition.itemsLayer, itemPrefab, 1);
     }
 

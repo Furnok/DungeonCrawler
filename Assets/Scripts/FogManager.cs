@@ -33,6 +33,7 @@ public class FogManager : MonoBehaviour
     {
         if (generateFogs)
         {
+            fogs.Clear();
             GenerateFogs(fogPrefab);
         }
     }
