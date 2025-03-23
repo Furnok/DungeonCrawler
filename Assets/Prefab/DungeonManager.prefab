@@ -369,7 +369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fogPrefab: {fileID: 818476359416893509, guid: 1247efe2b2d86d648a9b828ea2758b3a, type: 3}
   fogsParent: {fileID: 3376173495250997806}
-  generateFogs: 0
+  generateFogs: 1
   mapDefinition: {fileID: 11400000, guid: 4425ae0772831cf4d81dbf04501ad88e, type: 2}
   playerPosition: {fileID: 11400000, guid: 2aa3fcb7867e4fc49a2a55fa997a98d6, type: 2}
 --- !u!114 &6598848335957547566
