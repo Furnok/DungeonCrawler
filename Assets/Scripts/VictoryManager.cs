@@ -20,9 +20,6 @@ public class VictoryManager : MonoBehaviour
     private void CheckPlayerOnExitTile(Vector2Int position)
     {
         Vector2Int exitPosition = new Vector2Int(mapDefinition.Value.exitCoordinates[0], mapDefinition.Value.exitCoordinates[1]);
-        Debug.Log(exitPosition);
-        Debug.Log(playerPosition.Value);
-        Debug.Log(itemsLeft.Value);
         if (playerPosition.Value == exitPosition && itemsLeft.Value == 0)
         {
             onPlayerFinishLevel.RaiseEvent();

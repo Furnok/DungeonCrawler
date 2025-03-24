@@ -28,6 +28,9 @@ public class LevelManager : MonoBehaviour
 
     private GameObject exitGameObject;
 
+    private Vector2 startPos;
+    private float minSwipeDistance = 50f; // Minimum distance to register a swipe
+
     private void Awake()
     {
         playerPosition.Value = Vector2Int.zero;
@@ -134,7 +137,51 @@ public class LevelManager : MonoBehaviour
     {
         if (ctx.performed)
         {
-            TryMove(ctx.ReadValue<Vector2>());
+            //TryMove(ctx.ReadValue<Vector2>());
+        }
+    }
+
+    public void OnLeftMouseInput(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            startPos = Mouse.current.position.ReadValue();
+        }
+        else if (ctx.canceled)
+        {
+            Vector2 endPos = Mouse.current.position.ReadValue();
+            DetectSwipe(startPos, endPos);
+        }
+    }
+
+    private void DetectSwipe(Vector2 start, Vector2 end)
+    {
+        Vector2 swipeVector = end - start;
+
+        if (swipeVector.magnitude < minSwipeDistance) return;
+
+        if (Mathf.Abs(swipeVector.x) > Mathf.Abs(swipeVector.y))
+        {
+            if (swipeVector.x > 0)
+            {
+                TryMove(new Vector2(1, 0));
+            }
+            else
+            {
+                TryMove(new Vector2(-1, 0));
+            }
+                
+        }
+        else
+        {
+            if (swipeVector.y > 0)
+            {
+                TryMove(new Vector2(0, 1));
+            } 
+            else
+            {
+                TryMove(new Vector2(0, -1));
+            }      
         }
     }
 
