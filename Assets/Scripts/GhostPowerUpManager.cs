@@ -7,13 +7,15 @@ public class GhostPowerUpManager : MonoBehaviour
     [SerializeField] private float timeGhostMode = 5f;
     [SerializeField] private GameObject ghostPowerUpPrefab;
     [SerializeField] private Transform ghostPowerUpsParent;
+    [SerializeField] private LevelManager levelManager;
+    [SerializeField] private ItemManager itemManager;
 
     public RSE_OnPlayerFinishLevel onPlayerFinishLevel;
     public RSO_PlayerPosition playerPosition;
     public RSO_MapDefinition mapDefinition;
     public RSO_PlayerGhostMode playerGhostMode;
     public RSE_OnPlayerDie onPlayerDie;
-    private Dictionary<Vector2Int, GameObject> ghostPowerUps = new Dictionary<Vector2Int, GameObject>();
+    public Dictionary<Vector2Int, GameObject> ghostPowerUps = new Dictionary<Vector2Int, GameObject>();
 
     private Coroutine ghostModeCoroutine;
 
@@ -92,16 +94,27 @@ public class GhostPowerUpManager : MonoBehaviour
 
     private void GenerateItems(int[] layer, GameObject tilePrefab, int tileType)
     {
-        for (int x = 0; x < mapDefinition.Value.width; x++)
+        for (int i = 0; i < 1; i++)
         {
-            for (int y = 0; y < mapDefinition.Value.height; y++)
+            bool isValid = false;
+            Vector2Int spawnpoint = Vector2Int.zero;
+
+            while (!isValid)
             {
-                if (layer[x * mapDefinition.Value.width + y] == tileType)
+                spawnpoint = new Vector2Int(Random.Range(0, levelManager._mapDefinition.width), Random.Range(0, levelManager._mapDefinition.height));
+
+                if (!IsWall(spawnpoint)
+                    && !ghostPowerUps.ContainsKey(spawnpoint)
+                    && !itemManager.items.ContainsKey(spawnpoint)
+                    && new Vector3(spawnpoint.x, 0, spawnpoint.y) != new Vector3(levelManager._mapDefinition.exitCoordinates[0], 0, levelManager._mapDefinition.exitCoordinates[1])
+                    && new Vector3(spawnpoint.x, 0, spawnpoint.y) != new Vector3(levelManager._mapDefinition.spawnCoordinates[0], 0, levelManager._mapDefinition.spawnCoordinates[1]))
                 {
-                    GameObject item = Instantiate(tilePrefab, new Vector3(x, 0, y), Quaternion.identity, ghostPowerUpsParent);
-                    AddItem(new Vector2Int(x, y), item);
+                    isValid = true;
                 }
             }
+
+            GameObject item = Instantiate(tilePrefab, new Vector3(spawnpoint.x, 0, spawnpoint.y), Quaternion.identity, ghostPowerUpsParent);
+            AddItem(new Vector2Int(spawnpoint.x, spawnpoint.y), item);
         }
     }
 }

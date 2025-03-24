@@ -196,6 +196,14 @@ MonoBehaviour:
   - {fileID: 2027840930833016113}
   - {fileID: 2164212145585096871}
   - {fileID: 6619446028642172539}
+  _mapDefinition:
+    width: 0
+    height: 0
+    spawnCoordinates: 
+    exitCoordinates: 
+    wallLayer: 
+    itemsLayer: 
+    ghostPowerUpLayer: 
   playerPosition: {fileID: 11400000, guid: 2aa3fcb7867e4fc49a2a55fa997a98d6, type: 2}
   mapDefinition: {fileID: 11400000, guid: 4425ae0772831cf4d81dbf04501ad88e, type: 2}
   playerGhostMode: {fileID: 11400000, guid: 468f7211b1655904cbd792955b194fc6, type: 2}
@@ -336,6 +344,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 5743713307096757724, guid: 33c0ea7b3b949e649b53fe5e2dd63d28, type: 3}
   itemsParent: {fileID: 1615827809905110812}
+  numberItems: 5
+  levelManager: {fileID: 8569313398386446549}
+  ghostPowerUpManager: {fileID: 6598848335957547566}
   playerPosition: {fileID: 11400000, guid: 2aa3fcb7867e4fc49a2a55fa997a98d6, type: 2}
   itemsLeft: {fileID: 11400000, guid: d7262063fe3b50f45ad40c97fdffb964, type: 2}
   mapDefinition: {fileID: 11400000, guid: 4425ae0772831cf4d81dbf04501ad88e, type: 2}
@@ -387,6 +398,8 @@ MonoBehaviour:
   timeGhostMode: 5
   ghostPowerUpPrefab: {fileID: 5743713307096757724, guid: fc8198b0002446b4e9b98500eb8d23a7, type: 3}
   ghostPowerUpsParent: {fileID: 693257434508660822}
+  levelManager: {fileID: 8569313398386446549}
+  itemManager: {fileID: 2857920373692261416}
   onPlayerFinishLevel: {fileID: 11400000, guid: 26a44852dd751bc4f88ea3f1399b2966, type: 2}
   playerPosition: {fileID: 11400000, guid: 2aa3fcb7867e4fc49a2a55fa997a98d6, type: 2}
   mapDefinition: {fileID: 11400000, guid: 4425ae0772831cf4d81dbf04501ad88e, type: 2}

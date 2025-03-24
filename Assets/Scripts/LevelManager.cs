@@ -15,7 +15,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Transform levelParent;
     [SerializeField] private GameObject[] allLevel;
 
-    private MapDefinition _mapDefinition;
+    public MapDefinition _mapDefinition;
     private List<GameObject> walls, floors;
     public RSO_PlayerPosition playerPosition;
     public RSO_MapDefinition mapDefinition;
@@ -26,7 +26,7 @@ public class LevelManager : MonoBehaviour
     public RSO_LevelNumber _levelNumber;
     public RSE_OnPlayerMove onPlayerMove;
 
-    GameObject exitGameObject;
+    private GameObject exitGameObject;
 
     private void Awake()
     {
@@ -149,7 +149,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private bool IsWall(Vector2Int position)
+    public bool IsWall(Vector2Int position)
     {
         if (position.x < 0 || position.x >= _mapDefinition.width || position.y < 0 || position.y >= _mapDefinition.height)
             return true;
