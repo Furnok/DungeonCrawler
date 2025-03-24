@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UI_Game : MonoBehaviour
 {
+    [SerializeField] TextMeshProUGUI textLevel;
     [SerializeField] TextMeshProUGUI _movementPointText;
     [SerializeField] TextMeshProUGUI textTimer;
 
@@ -11,6 +12,7 @@ public class UI_Game : MonoBehaviour
 
     [SerializeField] private RSE_OnPlayerDie rseOnPlayerDie;
     [SerializeField] private RSE_OnPlayerFinishLevel rseOnPlayerFinishLevel;
+    [SerializeField] private RSO_Level rsoLevel;
 
     [SerializeField] private int TimeMax;
 
@@ -20,6 +22,7 @@ public class UI_Game : MonoBehaviour
     private void OnEnable()
     {
         movementPoints.onValueChanged += UpdateMovementPointText;
+        rsoLevel.onValueChanged += UpdateLevelText;
         rseOnPlayerFinishLevel.action += ResetTimer;
     }
 
@@ -31,12 +34,15 @@ public class UI_Game : MonoBehaviour
         }
         
         movementPoints.onValueChanged -= UpdateMovementPointText;
+        rsoLevel.onValueChanged -= UpdateLevelText;
         rseOnPlayerFinishLevel.action -= ResetTimer;
     }
 
     private void Start()
     {
         time = 0;
+        rsoLevel.Value = 1;
+        textLevel.text = $"Level: {rsoLevel.Value}";
         textTimer.text = $"Timer Left: {TimeMax}";
         timer = StartCoroutine(Timer());
     }
@@ -70,5 +76,10 @@ public class UI_Game : MonoBehaviour
     private void UpdateMovementPointText(int movementPoint)
     {
         _movementPointText.text = $"Movement Points Left: {movementPoint}";
+    }
+
+    private void UpdateLevelText(int level)
+    {
+        textLevel.text = $"Level: {level}";
     }
 }

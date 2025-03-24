@@ -6,6 +6,7 @@ public class VictoryManager : MonoBehaviour
     public RSE_OnPlayerFinishLevel onPlayerFinishLevel;
     public RSO_ItemsLeft itemsLeft;
     public RSO_MapDefinition mapDefinition;
+    [SerializeField] private RSO_Level rsoLevel;
 
     private void OnEnable()
     {
@@ -23,6 +24,7 @@ public class VictoryManager : MonoBehaviour
         if (playerPosition.Value == exitPosition && itemsLeft.Value == 0)
         {
             onPlayerFinishLevel.RaiseEvent();
+            rsoLevel.Value++;
             Debug.Log("Victory");
         }
     }

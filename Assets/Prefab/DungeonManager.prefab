@@ -382,6 +382,7 @@ MonoBehaviour:
   onPlayerFinishLevel: {fileID: 11400000, guid: 26a44852dd751bc4f88ea3f1399b2966, type: 2}
   itemsLeft: {fileID: 11400000, guid: d7262063fe3b50f45ad40c97fdffb964, type: 2}
   mapDefinition: {fileID: 11400000, guid: 4425ae0772831cf4d81dbf04501ad88e, type: 2}
+  rsoLevel: {fileID: 11400000, guid: 773e1a65bd665ee4fb4a6ad2ddee5705, type: 2}
 --- !u!114 &273569129397905816
 MonoBehaviour:
   m_ObjectHideFlags: 0
