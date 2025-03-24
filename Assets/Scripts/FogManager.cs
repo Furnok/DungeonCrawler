@@ -40,10 +40,19 @@ public class FogManager : MonoBehaviour
 
     private void HandlePlayerPositionChange(Vector2Int position)
     {
-        if (fogs.ContainsKey(position))
+        int radius = 1; // Adjust this value to control how much area is cleared
+
+        for (int x = -radius; x <= radius; x++)
         {
-            Destroy(fogs[position]);
-            fogs.Remove(position);
+            for (int y = -radius; y <= radius; y++)
+            {
+                Vector2Int pos = new Vector2Int(position.x + x, position.y + y);
+                if (fogs.ContainsKey(pos))
+                {
+                    Destroy(fogs[pos]);
+                    fogs.Remove(pos);
+                }
+            }
         }
     }
 
