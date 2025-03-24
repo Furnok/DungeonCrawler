@@ -189,7 +189,13 @@ public class LevelManager : MonoBehaviour
     {
         Vector2Int destination = playerPosition.Value + new Vector2Int((int)direction.x, (int)direction.y);
 
-        if (!IsWall(destination) && !playerIsMoving.Value || playerGhostMode.Value == true && !playerIsMoving.Value)
+        if (playerGhostMode.Value && destination.x < _mapDefinition.width && destination.y < _mapDefinition.height)
+        {
+            playerPosition.Value = destination;
+            onPlayerMove.RaiseEvent();
+        }
+
+        if (!IsWall(destination) && !playerIsMoving.Value && !playerIsMoving.Value)
         {
             playerPosition.Value = destination;
             onPlayerMove.RaiseEvent();
