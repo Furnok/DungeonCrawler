@@ -145,11 +145,11 @@ public class LevelManager : MonoBehaviour
     {
         if (ctx.started)
         {
-            startPos = Mouse.current.position.ReadValue();
+            startPos = Pointer.current.position.ReadValue();
         }
         else if (ctx.canceled)
         {
-            Vector2 endPos = Mouse.current.position.ReadValue();
+            Vector2 endPos = Pointer.current.position.ReadValue();
             DetectSwipe(startPos, endPos);
         }
     }

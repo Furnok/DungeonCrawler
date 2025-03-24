@@ -25,7 +25,11 @@ public class UI_Game : MonoBehaviour
 
     private void OnDisable()
     {
-        StopCoroutine(timer);
+        if(timer != null)
+        {
+            StopCoroutine(timer);
+        }
+        
         movementPoints.onValueChanged -= UpdateMovementPointText;
         rseOnPlayerFinishLevel.action -= ResetTimer;
     }
